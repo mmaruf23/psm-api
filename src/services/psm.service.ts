@@ -1,16 +1,22 @@
 import { parsePluData } from "../helpers/mapper";
 import { getPeriod } from "../helpers/time";
+import { isValidStoreCode } from "../helpers/validator";
 import type { ApiResponse, PluData, WeekType } from "../types";
 
-const getPeriodeData = async (kv: KVNamespace, kode_toko: string, weekType: WeekType = "now"): Promise<ApiResponse> => {
+const getPeriodeData = async (kv: KVNamespace, kode_toko: string, week_type: WeekType): Promise<ApiResponse> => {
+  if (!isValidStoreCode(kode_toko)) return { success: false, code: 400, message: "invalid kd_toko format" };
+
   let pluDatas: PluData[][] | null = await kv.get("periode", "json");
   if (pluDatas) return { success: true, code: 200, data: pluDatas };
 
   const result: string[] = [];
-  const code_prefix = getPeriod(weekType);
+  const code_prefix = getPeriod(week_type);
 
-  for (let i = 1; i <= 20; i++) {
-    const url = `https://intranet.sat.co.id/pdmstore/public/file/plu/${weekType}/${code_prefix}${i}_${kode_toko}.csv`;
+  for (let i = 1; i <= 21; i++) {
+    const url = `https://intranet.sat.co.id/pdmstore/public/file/plu/${week_type}/${code_prefix}${i
+      .toString()
+      .padStart(3, "0")}_${kode_toko}.csv`;
+    console.log(url);
     try {
       const res = await fetch(url);
       if (res.status === 200) result.push(await res.text());

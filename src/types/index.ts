@@ -1,14 +1,14 @@
-import type { StatusCode } from "hono/utils/http-status";
+import type { ContentfulStatusCode, StatusCode } from "hono/utils/http-status";
 
 type SuccessResponse<T> = {
   success: true;
-  code: StatusCode;
+  code: ContentfulStatusCode;
   data?: T;
 };
 
 type ErrorResponse = {
   success: false;
-  code: StatusCode;
+  code: ContentfulStatusCode;
   message: string;
 };
 
