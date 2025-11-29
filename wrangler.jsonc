@@ -1,22 +1,22 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "alfaantuh",
+  "name": "psm",
   "main": "src/index.ts",
   "compatibility_date": "2025-10-11",
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "alfaantuh",
-      "database_id": "bce1b25c-814f-4ebd-a9e4-096dbeb33555",
-      "migrations_dir": "drizzle"
-    }
-  ],
+  // "d1_databases": [
+  //   {
+  //     "binding": "DB",
+  //     "database_name": "alfaantuh",
+  //     "database_id": "bce1b25c-814f-4ebd-a9e4-096dbeb33555",
+  //     "migrations_dir": "drizzle"
+  //   }
+  // ],
   "kv_namespaces": [
     {
       "binding": "KV",
       "id": "8b76cc56ffb94f8c8ca495cf16a4f00f"
     }
-  ]
+  ],
   // "compatibility_flags": [
   //   "nodejs_compat"
   // ],
@@ -45,8 +45,13 @@
   // "ai": {
   //   "binding": "AI"
   // },
-  // "observability": {
-  //   "enabled": true,
-  //   "head_sampling_rate": 1
-  // }
+
+  "observability": {
+    "logs": {
+      "enabled": false,
+      "head_sampling_rate": 1,
+      "invocation_logs": true,
+      "persist": true
+    }
+  }
 }

@@ -47,7 +47,7 @@ export const parsePeriodeData = (raw: string[]) => {
   return listProgramData;
 };
 
-export const parseArchiveData = (s: string) => {
+export const parseArchiveData = (s: string): ArchiveData => {
   const parsed = parseCSVtoObject(s) as RawArchiveData[];
   const { kd_cabang, kd_store, asq, target_min, status } = parsed[0];
   const cashier = parsed.map(({ nik, nama, jabatan, qty_act, pct, pos_umum, pos_branch, pos_region, pos_nas }) => {

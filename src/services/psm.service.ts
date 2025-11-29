@@ -1,3 +1,4 @@
+import type { ContentfulStatusCode } from "hono/utils/http-status";
 import { dev_mode } from "../app/factory";
 import { parsePeriodeData, parseCSVtoObject, parseArchiveData } from "../helpers/mapper";
 import { getPeriod } from "../helpers/time";
@@ -15,7 +16,7 @@ async function getProgramData(kv: KVNamespace, week_type: WeekType): Promise<Api
 
   let fetchedData: string[];
   if (dev_mode) {
-    console.log("pake dummyRaw");
+    console.log("dummy");
     fetchedData = dummyRaw;
   } else {
     fetchedData = await fetchProgramData(week_type, kode_periode);
@@ -39,7 +40,12 @@ export async function fetchProgramData(week_type: WeekType, kode_periode: string
     try {
       const res = await fetch(url);
 
-      if (res.status === 200) result.push(await res.text());
+      if (res.status === 200) {
+        result.push(await res.text());
+      } else {
+        // worker happy
+        res.body?.cancel();
+      }
     } catch (error) {
       continue;
     }
@@ -52,20 +58,24 @@ async function getPSMData(kode_toko: string, kode_program: string, week_type: We
   if (!isValidStoreCode(kode_toko)) return { success: false, code: 400, message: "invalid kd_toko format" };
   if (!isValidProgramCode(kode_program)) return { success: false, code: 400, message: "invalid kode_program format" };
 
-  const url = `https://intranet.sat.co.id/psmstore/public/file/cashier/${week_type}/${kode_program}_${kode_toko.toUpperCase()}.csv`;
+  const url = `https://intranet.sat.co.id/pdmstore/public/file/cashier/${week_type}/${kode_program}_${kode_toko.toUpperCase()}.csv`;
 
+  let response: string;
   try {
-    const response = dev_mode ? dummyAcv : await (await fetch(url)).text();
+    const res = dev_mode ? new Response(dummyAcv, { status: 200 }) : await fetch(url);
 
-    console.log(response === dummyAcv, " adalah dummy");
+    if (res.status !== 200)
+      return { success: false, code: res.status as ContentfulStatusCode, message: res.statusText };
 
-    const result = parseArchiveData(response) as ArchiveData;
-
-    return { success: true, code: 200, data: result };
+    response = await res.text();
   } catch (error) {
     console.error(error);
     return { success: false, code: 500, message: "error getting psm data" };
   }
+
+  const result = parseArchiveData(response);
+
+  return { success: true, code: 200, data: result };
 }
 
 export default { getProgramData, getPSMData };

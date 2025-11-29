@@ -1,5 +1,5 @@
 {
-  "name": "alfaantuh",
+  "name": "psm",
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
