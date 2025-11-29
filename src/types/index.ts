@@ -35,4 +35,45 @@ export type ProgramData = {
   }[];
 };
 
+export type RawArchiveData = {
+  kd_cabang: string;
+  nik: string;
+  nama: string;
+  kd_jabatan: string;
+  jabatan: string;
+  asq: string;
+  target_min: string;
+  qty_act: string;
+  pct: string;
+  pos_umum: string;
+  pos_branch: string;
+  pos_region: string;
+  pos_nas: string;
+  status: string;
+  kd_store: string;
+  status_umum: string;
+  status_branch: string;
+  status_regional: string;
+  status_nas: string;
+};
+
+export type ArchiveData = {
+  kd_cabang: string;
+  asq: string;
+  target_min: string;
+  status: string;
+  kd_store: string;
+  cashier: {
+    nik: string;
+    nama: string;
+    jabatan: string;
+    qty_act: string;
+    pct: string;
+    pos_umum: string;
+    pos_branch: string;
+    pos_region: string;
+    pos_nas: string;
+  }[];
+};
+
 export type WeekType = "now" | "before" | "next";

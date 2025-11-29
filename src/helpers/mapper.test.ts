@@ -1,6 +1,7 @@
-import { dummyRaw } from "../sample/dummy";
-import { parsePeriodeData } from "./mapper";
+import { dummyAcv, dummyRaw } from "../sample/dummy";
+import { parseArchiveData, parsePeriodeData } from "./mapper";
 
-const result = parsePeriodeData(dummyRaw);
+// const periode_data = parsePeriodeData(dummyRaw);
+// console.log(JSON.stringify(periode_data, null, 2));
 
-console.log(JSON.stringify(result, null, 2));
+parseArchiveData(dummyAcv);

@@ -1,7 +1,5 @@
-import { Hono } from "hono";
+import { app } from "./app/factory";
 import { env, psm } from "./app/router";
-
-const app = new Hono();
 
 app.get("/", (c) => {
   return c.text("Hello Hono!");

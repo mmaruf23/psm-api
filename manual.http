@@ -1,7 +1,12 @@
 @baseUrl = http://localhost:8787
 # @baseUrl = https://alfaantuh.maruuf82.workers.dev
 
-GET {{baseUrl}}/psm/J599?periode=before
 
 ### GET ENV
 GET {{baseUrl}}/env
+
+### GET LIST PLU PSM
+GET {{baseUrl}}/psm?periode=before
+
+### GET ARCHIEVE PSM
+GET {{baseUrl}}/psm/J599/25123001?periode=before

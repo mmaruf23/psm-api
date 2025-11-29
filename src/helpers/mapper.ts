@@ -1,6 +1,6 @@
-import type { PluData, ProgramData } from "../types";
+import type { RawArchiveData, PluData, ProgramData, ArchiveData } from "../types";
 
-export const parsePluData = (rawData: string) => {
+export const parseCSVtoObject = (rawData: string) => {
   const rowData = rawData.trim().replace(" ", "_").replace(/["\r]/g, "").split("\n");
   const header = rowData.shift()!.toLowerCase().split("|");
   const data = rowData.map((r) => r.split("|"));
@@ -12,7 +12,7 @@ export const parsePluData = (rawData: string) => {
     }, {} as Record<string, string>);
   });
 
-  return parsed as PluData[];
+  return parsed;
 };
 
 export const parsePeriodeData = (raw: string[]) => {
@@ -45,4 +45,14 @@ export const parsePeriodeData = (raw: string[]) => {
   });
 
   return listProgramData;
+};
+
+export const parseArchiveData = (s: string) => {
+  const parsed = parseCSVtoObject(s) as RawArchiveData[];
+  const { kd_cabang, kd_store, asq, target_min, status } = parsed[0];
+  const cashier = parsed.map(({ nik, nama, jabatan, qty_act, pct, pos_umum, pos_branch, pos_region, pos_nas }) => {
+    return { nik, nama, jabatan, qty_act, pct, pos_umum, pos_branch, pos_region, pos_nas };
+  });
+
+  return { kd_cabang, kd_store, asq, target_min, status, cashier } as ArchiveData;
 };
