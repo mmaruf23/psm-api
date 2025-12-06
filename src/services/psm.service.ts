@@ -31,7 +31,9 @@ async function getProgramData(kv: KVNamespace, week_type: WeekType): Promise<Api
   }
 
   listProgramData = parsePeriodeData(fetchedData);
-  await kv.put(kode_periode, JSON.stringify(listProgramData));
+  await kv.put(kode_periode, JSON.stringify(listProgramData), {
+    expirationTtl: 2592000,
+  });
 
   return { success: true, code: 200, data: listProgramData };
 }
