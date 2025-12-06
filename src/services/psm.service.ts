@@ -22,7 +22,13 @@ async function getProgramData(kv: KVNamespace, week_type: WeekType): Promise<Api
     fetchedData = await fetchProgramData(week_type, kode_periode);
   }
 
-  if (!fetchedData.length) return { success: false, code: 404, message: "no data provided from the server" };
+  if (!fetchedData.length) {
+    const noDataResponse: ApiResponse = { success: false, code: 404, message: "no data provided from the server" };
+    await kv.put(kode_periode, JSON.stringify(noDataResponse), {
+      expirationTtl: 43200,
+    });
+    return noDataResponse;
+  }
 
   listProgramData = parsePeriodeData(fetchedData);
   await kv.put(kode_periode, JSON.stringify(listProgramData));
