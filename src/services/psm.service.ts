@@ -8,14 +8,14 @@ import type { ApiResponse, RawArchiveData, ProgramData, WeekType, ArchiveData } 
 
 async function getProgramData(kv: KVNamespace, week_type: WeekType): Promise<ApiResponse> {
   const kode_periode = getPeriod(week_type);
-  let listProgramData: ProgramData[] | null = await kv.get(kode_periode, "json");
-  if (listProgramData) {
+  let listProgramDataResponse: ApiResponse | null = await kv.get(kode_periode, "json");
+  if (listProgramDataResponse) {
     console.log("pake dari kv");
-    return { success: true, code: 200, data: listProgramData };
+    return listProgramDataResponse;
   }
 
   let fetchedData: string[];
-  if (dev_mode) {
+  if (false) {
     console.log("dummy");
     fetchedData = dummyRaw;
   } else {
@@ -30,12 +30,12 @@ async function getProgramData(kv: KVNamespace, week_type: WeekType): Promise<Api
     return noDataResponse;
   }
 
-  listProgramData = parsePeriodeData(fetchedData);
-  await kv.put(kode_periode, JSON.stringify(listProgramData), {
+  listProgramDataResponse = parsePeriodeData(fetchedData);
+  await kv.put(kode_periode, JSON.stringify(listProgramDataResponse), {
     expirationTtl: 2592000,
   });
 
-  return { success: true, code: 200, data: listProgramData };
+  return listProgramDataResponse;
 }
 
 export async function fetchProgramData(week_type: WeekType, kode_periode: string) {
