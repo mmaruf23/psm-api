@@ -15,7 +15,7 @@ async function getProgramData(kv: KVNamespace, week_type: WeekType): Promise<Api
   }
 
   let fetchedData: string[];
-  if (false) {
+  if (dev_mode) {
     console.log("dummy");
     fetchedData = dummyRaw;
   } else {
