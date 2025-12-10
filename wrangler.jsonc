@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "psm",
+  "name": "psm-api",
   "main": "src/index.ts",
   "compatibility_date": "2025-10-11",
   // "d1_databases": [
