@@ -15,6 +15,12 @@ app.get("/", (c) => {
   return c.text("Hello Hono!");
 });
 
+app.get("/env", (c) => {
+  return c.json({
+    env: env
+  });
+});
+
 app.get("/origin", (c) => {
   console.log(env.ORIGIN)
   return c.text(env.ORIGIN || "ORIGIN not set!");
