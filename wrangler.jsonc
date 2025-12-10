@@ -16,7 +16,15 @@
       "binding": "PSM",
       "id": "a4404a7d5cae4ba4874e490420fa7b30"
     }
-  ]
+  ],
+  "observability": {
+    "logs": {
+      "enabled": false,
+      "head_sampling_rate": 1,
+      "invocation_logs": true,
+      "persist": true
+    }
+  }
   // "compatibility_flags": [
   //   "nodejs_compat"
   // ],

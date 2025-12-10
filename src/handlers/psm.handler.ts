@@ -5,7 +5,7 @@ import psmService from "../services/psm.service";
 const getPeriode = factory.createHandlers(async (c) => {
   const week_type = parseWeekType(c.req.query("periode"));
 
-  const result = await psmService.getProgramData(c.env.KV, week_type);
+  const result = await psmService.getProgramData(c.env.PSM, week_type);
   return c.json(result, result.code);
 });
 

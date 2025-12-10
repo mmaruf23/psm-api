@@ -5,4 +5,4 @@ export const factory = createFactory<{ Bindings: CloudflareBindings }>();
 
 export const app = factory.createApp();
 
-export const dev_mode = env.DEV === "development";
+export const dev_mode = env.MODE === "development";

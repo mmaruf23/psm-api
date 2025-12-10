@@ -6,7 +6,7 @@ import { env } from "cloudflare:workers";
 app.use(
   "/psm/*",
   cors({
-    origin: [env.ORIGIN, env.DEV_ORIGIN, env.PREVIEW_ORIGIN],
+    origin: [env.ORIGIN],
     allowMethods: ["GET"],
   })
 );
@@ -16,7 +16,5 @@ app.get("/", (c) => {
 });
 
 app.route("psm", psm);
-
-// app.route("env", env);
 
 export default app;
