@@ -13,10 +13,10 @@
   // ],
   "kv_namespaces": [
     {
-      "binding": "KV",
-      "id": "8b76cc56ffb94f8c8ca495cf16a4f00f"
+      "binding": "PSM",
+      "id": "a4404a7d5cae4ba4874e490420fa7b30"
     }
-  ],
+  ]
   // "compatibility_flags": [
   //   "nodejs_compat"
   // ],
@@ -45,20 +45,4 @@
   // "ai": {
   //   "binding": "AI"
   // },
-
-  "observability": {
-    "enabled": false,
-    "head_sampling_rate": 1,
-    "logs": {
-      "enabled": true,
-      "head_sampling_rate": 1,
-      "persist": true,
-      "invocation_logs": true
-    },
-    "traces": {
-      "enabled": false,
-      "persist": true,
-      "head_sampling_rate": 1
-    }
-  }
 }
