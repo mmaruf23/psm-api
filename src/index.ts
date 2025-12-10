@@ -11,22 +11,6 @@ app.use(
   })
 );
 
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
-});
-
-app.get("/env", (c) => {
-  return c.json({
-    env: c.env
-  });
-});
-
-app.get("/origin", (c) => {
-  console.log(env.ORIGIN)
-  return c.text(env.ORIGIN || "ORIGIN not set!");
-});
-
-
 app.route("psm", psm);
 
 export default app;

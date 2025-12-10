@@ -69,14 +69,25 @@ async function getPSMData(kode_toko: string, kode_program: string, week_type: We
   const url = `https://intranet.sat.co.id/pdmstore/public/file/cashier/${week_type}/${kode_program}_${kode_toko.toUpperCase()}.csv`;
 
   let response: string;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 3000);
+
   try {
-    const res = dev_mode ? new Response(dummyAcv, { status: 200 }) : await fetch(url);
+    const res = dev_mode ? new Response(dummyAcv, { status: 200 }) : await fetch(url, { signal: controller.signal });
+
+    clearTimeout(timeout);
 
     if (res.status !== 200)
-      return { success: false, code: res.status as ContentfulStatusCode, message: res.statusText };
+      return { success: false, code: res.status as ContentfulStatusCode, message: "data not available" };
 
     response = await res.text();
   } catch (error) {
+    clearTimeout(timeout);
+    if (error instanceof DOMException && error.name === "AbortError") {
+      return { success: false, code: 408, message: "request timeout" };
+    }
+
     console.error(error);
     return { success: false, code: 500, message: "error getting psm data" };
   }
